@@ -1,0 +1,27 @@
+package views;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class MainView extends JFrame {
+    public MainView(String title ) {
+
+        setTitle(title);
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JTabbedPane mainTab = new JTabbedPane();
+
+        mainTab.addTab("Gehaltsabrechnung", new GehaltView());
+        mainTab.addTab("Spesenabrechnung", new SpesenView());
+
+        getContentPane().add(mainTab, BorderLayout.CENTER);
+
+        setVisible(true);
+
+
+
+
+
+    }
+}
