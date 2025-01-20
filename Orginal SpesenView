@@ -1,0 +1,97 @@
+package views;
+
+import models.Person;
+import wwsservices.DataAccessObject;
+
+import javax.swing.*;
+import javax.swing.text.View;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+public class SpesenView extends JPanel {
+
+    JComboBox<String> personAuswahl;
+
+
+    public SpesenView() {
+        setLayout(new BorderLayout());
+        Box spesenBox = Box.createVerticalBox();
+        add(spesenBox, BorderLayout.CENTER);
+
+
+        DataAccessObject dao = new DataAccessObject();
+        List<Person> listPersonen = dao.findAll();
+
+
+        String[] personen = new String[listPersonen.size()];
+        for (int i = 0; i < listPersonen.size(); i++) {
+            Person bufPerson = listPersonen.get(i);
+            personen[i] = String.format("%s: %s, %s",
+                    bufPerson.getId(),
+                    bufPerson.getNachname(),
+                    bufPerson.getVorname()
+            );
+        }
+
+        personAuswahl = new JComboBox<>(personen);
+        spesenBox.add(personAuswahl);
+
+        spesenBox.add(new Label("Spesenaberechnung"));
+
+
+
+
+
+        personAuswahl.addActionListener(event -> {
+            JOptionPane.showMessageDialog(null, "Hallo aus dem Event");
+        });
+
+
+
+        personAuswahl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(getParent(), "Hallo aus dem Event");
+
+            }
+        })
+
+
+
+
+        personAuswahl.addActionListener(new JBoxEventHandler());
+
+
+    private class JBoxEventHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(getParent(), "Hallo aus dem Event");
+
+
+
+        personAuswahl.addActionListener(new JBoxEventHandler());
+
+        JButton btnTest = new JButton("Test");
+        spesenBox.add(btnTest);
+
+        btnTest.addActionListener(new ButtonEventHandler());
+    }
+
+
+    private class ButtonEventHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(getParent(), "Hallo aus dem Event");
+
+        }
+    }
+
+    private class JBoxEventHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(getParent(), personAuswahl.getSelectedItem());
+        }
+    }
+}
