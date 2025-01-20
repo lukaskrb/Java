@@ -1,0 +1,53 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+
+public class TableView {
+    public static void main(String[] args) {
+        // Erstelle das Hauptfenster (JFrame)
+        JFrame frame = new JFrame("TableView");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Schließe das Programm beim Schließen des Fensters
+        frame.setSize(600, 400); // Setze die Fenstergröße
+        frame.setLayout(new BorderLayout()); // Verwende BorderLayout als Layout-Manager
+        
+        // Setze das Icon des Fensters
+        ImageIcon icon = new ImageIcon("fswi32x32.png"); // Pfad zum Icon (anpassen)
+        frame.setIconImage(icon.getImage());
+        
+        // Erstelle das obere Panel mit horizontalem BoxLayout
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS)); // Horizontales Layout (X-Achse)
+        
+        // Füge ein Bild (Icon) hinzu
+        JLabel searchIcon = new JLabel(new ImageIcon("lupe32x32.png")); // Bild laden (Pfad anpassen)
+        topPanel.add(searchIcon);
+        
+        // Füge horizontalen Platz (Glue) für Abstand hinzu
+        topPanel.add(Box.createHorizontalGlue());
+        
+        // Füge eine JComboBox (Dropdown-Liste) hinzu
+        String[] categories = {"Category A", "Category B", "Category C"}; // Dropdown-Einträge
+        JComboBox<String> comboBox = new JComboBox<>(categories);
+        topPanel.add(comboBox);
+        
+        // Füge das obere Panel zum Rahmen (PAGE_START im BorderLayout)
+        frame.add(topPanel, BorderLayout.PAGE_START);
+        
+        // Erstelle die zentrale Tabelle mit JScrollPane
+        String[] columnNames = {"Column 1", "Column 2", "Column 3"}; // Tabellenspalten
+        Object[][] data = {
+            {"Row 1, Col 1", "Row 1, Col 2", "Row 1, Col 3"}, // Zeilendaten
+            {"Row 2, Col 1", "Row 2, Col 2", "Row 2, Col 3"}
+        };
+        JTable table = new JTable(new DefaultTableModel(data, columnNames)); // Tabelle erstellen
+        JScrollPane scrollPane = new JScrollPane(table); // Tabelle in JScrollPane packen (für Scrollfunktion)
+        frame.add(scrollPane, BorderLayout.CENTER); // In der Mitte platzieren (CENTER)
+        
+        // Füge einen Button unten hinzu
+        JButton loadButton = new JButton("Load Table"); // Button mit Text "Load Table"
+        frame.add(loadButton, BorderLayout.PAGE_END); // Am unteren Rand (PAGE_END) platzieren
+        
+        // Zeige das Fenster an
+        frame.setVisible(true);
+    }
+}
