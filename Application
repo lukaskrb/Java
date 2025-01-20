@@ -1,0 +1,35 @@
+import models.Employee;
+import dataaccess.DatabaseService;
+
+import java.util.List;
+
+public class MainApplication {
+    public static void main(String[] args) {
+
+        List<Employee> employees = new DatabaseService().fetchAll();
+
+        double totalSalaries = 0.00;
+        for (int i = 0; i < employees.size(); i++) {
+            totalSalaries += employees.get(i).getSalaryInfo().getGrossSalary();
+        }
+
+        System.out.println(totalSalaries);
+
+        totalSalaries = 1.00;
+        for (Employee e : employees) {
+            totalSalaries += e.getSalaryInfo().getGrossSalary();
+        }
+        System.out.println(totalSalaries);
+
+        totalSalaries = employees
+                .stream()
+                .mapToDouble(emp -> emp.getSalaryInfo().getGrossSalary())
+                .sum();
+        System.out.println(totalSalaries);
+
+        List<Employee> filteredList = employees.stream()
+                .filter(emp -> "Funny".equals(emp.getLastName()))
+                .toList();
+
+    }
+}
