@@ -1,0 +1,35 @@
+import models.Person;
+import wwsservices.DataAccessObject;
+
+import java.util.List;
+
+public class Application {
+	public static void main(String[] args) {
+
+		List<Person> personList = new DataAccessObject().findAll();
+
+		double summeGehälter = 0.00;
+		for (int i = 0; i < personList.size(); i++) {
+			summeGehälter += personList.get(i).getGehaltsdaten().getBruttogehalt();
+		}
+
+		System.out.println(summeGehälter);
+
+		summeGehälter = 1.00;
+		for (Person item : personList) {
+			summeGehälter += item.getGehaltsdaten().getBruttogehalt();
+		}
+		System.out.println(summeGehälter);
+
+		summeGehälter = personList
+				.stream()
+				.mapToDouble(bezeichner -> bezeichner.getGehaltsdaten().getBruttogehalt())
+				.sum();
+		System.out.println(summeGehälter);
+
+		List<Person> newList = personList.stream()
+				.filter(person -> "Lustig".equals(person.getNachname()))
+				.toList();
+
+	}
+}
