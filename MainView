@@ -1,0 +1,22 @@
+package vies;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class MainView extends JFrame {
+    public Dashboard(String windowTitle) {
+
+        setTitle(windowTitle);
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JTabbedPane tabPanel = new JTabbedPane();
+
+        tabPanel.addTab("Salary Statement", new SalaryView());
+        tabPanel.addTab("Expense Report", new ExpenseView());
+
+        getContentPane().add(tabPanel, BorderLayout.CENTER);
+
+        setVisible(true);
+    }
+}
